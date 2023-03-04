@@ -17,18 +17,17 @@ request = pc.makeRequestRSpec()
 numRAM = [32, 64, 96]
 numCPU = [4, 8, 12]
 
-vitisVersion = [('2022.1')]
+vitisVersion = [('2021.2'), ('2022.1')]
 
-xrtVersion = [('2022.1'),
-             ('Do not install tools')] 
+xrtVersion = [('2021.1'), ('2022.1'), ('Do not install tools')] 
 
-pc.defineParameter("numRAM",  "Required RAM size (GB)",
+pc.defineParameter("numRAM",  "RAM size (GB)",
                    portal.ParameterType.INTEGER, numRAM[0], numRAM,
-                   longDescription="Required RAM size")
+                   longDescription="RAM size")
 
-pc.defineParameter("numCPU",  "Required no: of VCPUs",
+pc.defineParameter("numCPU",  "No: of VCPUs",
                    portal.ParameterType.INTEGER, numCPU[0], numCPU,
-                   longDescription="Required no: of VCPUs")
+                   longDescription="No: of VCPUs")
 
 pc.defineParameter("vitisVersion", "Vitis Version",
                    portal.ParameterType.STRING,
@@ -53,7 +52,7 @@ name = "node" + str(0)
 node = request.RawPC(name)
 #node.xen_ptype = "build-vm"
 node.hardware_type = "fpga-alveo"
-node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU20-64-STD"
+node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU18-64-STD"
 # node.exclusive = False
 
 # Request a specific number of VCPUs.
