@@ -7,15 +7,15 @@
 install_libs(){
     #sudo apt install -y ocl-icd
     #sudo apt install -y ocl-icd-devel
-    sudo apt install -y opencl-headers
-    sudo /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
-    sudo bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
+    apt install -y opencl-headers
+    /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
+    bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
 }
 
 install_dev_platform(){
     echo "Install dev platform"
-    sudo cp /proj/octfpga-PG0/tools/dev_platform/${XRTVERSION}/*.deb /tmp
-    sudo apt install /tmp/xilinx-u280*.deb
+    cp /proj/octfpga-PG0/tools/dev_platform/${XRTVERSION}/*.deb /tmp
+    apt install /tmp/xilinx-u280*.deb
 }
 
 install_xrt() {
@@ -26,8 +26,8 @@ install_xrt() {
     echo "Installing XRT dependencies..."
     apt update
     echo "Installing XRT package..."
-    sudo apt install -y /tmp/$XRT_PACKAGE
-    sudo bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
+    apt install -y /tmp/$XRT_PACKAGE
+    bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
 }
 
 install_shellpkg() {
@@ -118,8 +118,8 @@ if [ $REMOTEDESKTOP == "True" ] ; then
     echo "Installing remote desktop software"
     sudo apt install -y ubuntu-gnome-desktop
     echo "Installed gnome desktop"
-    sudo systemctl set-default multi-user.target
-    sudo apt install -y tigervnc-standalone-server
+    systemctl set-default multi-user.target
+    apt install -y tigervnc-standalone-server
     echo "Installed vnc server"
 fi
 
