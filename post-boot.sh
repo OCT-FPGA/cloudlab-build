@@ -7,6 +7,7 @@
 install_libs(){
     #sudo apt install -y ocl-icd
     #sudo apt install -y ocl-icd-devel
+    apt update
     apt install -y opencl-headers
     /proj/oct-fpga-p4-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
     bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
