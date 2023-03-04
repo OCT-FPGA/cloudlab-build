@@ -31,7 +31,7 @@ check_xrt() {
 
 install_xbflash() {
     cp -r /proj/oct-fpga-p4-PG0/tools/xbflash/${OSVERSION} /tmp
-    echo "Installing xbflash"
+    echo "Installing xbflash."
     apt install /tmp/${OSVERSION}/*.deb
 }
 
