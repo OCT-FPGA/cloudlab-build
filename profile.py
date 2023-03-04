@@ -21,13 +21,13 @@ vitisVersion = [('2021.2'), ('2022.1')]
 
 xrtVersion = [('2021.1'), ('2022.1'), ('Do not install tools')]  
 
-pc.defineParameter("numRAM",  "Required RAM size (GB)",
+pc.defineParameter("numRAM",  "RAM size (GB)",
                    portal.ParameterType.INTEGER, numRAM[0], numRAM,
-                   longDescription="Required RAM size")
+                   longDescription="RAM size")
 
-pc.defineParameter("numCPU",  "Required no: of VCPUs",
+pc.defineParameter("numCPU",  "No: of VCPUs",
                    portal.ParameterType.INTEGER, numCPU[0], numCPU,
-                   longDescription="Required no: of VCPUs")
+                   longDescription="No: of VCPUs")
 
 pc.defineParameter("vitisVersion", "Vitis Version",
                    portal.ParameterType.STRING,
