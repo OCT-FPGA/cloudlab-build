@@ -8,14 +8,8 @@ install_libs(){
     #sudo apt install -y ocl-icd
     #sudo apt install -y ocl-icd-devel
     sudo apt install -y opencl-headers
-    sudo /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
+    sudo /proj/oct-fpga-p4-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
     sudo bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
-}
-
-install_dev_platform(){
-    echo "Install dev platform"
-    sudo cp /proj/octfpga-PG0/tools/dev_platform/${XRTVERSION}/*.deb /tmp
-    sudo apt install /tmp/xilinx-u280*.deb
 }
 
 install_xrt() {
@@ -30,37 +24,13 @@ install_xrt() {
     sudo bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
 }
 
-install_shellpkg() {
-if [[ "$SHELL" == 1 ]]; then     
-    install_u280_shell  
-fi
-}
-
-check_shellpkg() {
-    PACKAGE_INSTALL_INFO=`apt list --installed 2>/dev/null | grep "$PACKAGE_NAME" | grep "$PACKAGE_VERSION"`
-}
-
 check_xrt() {
     XRT_INSTALL_INFO=`apt list --installed 2>/dev/null | grep "xrt" | grep "$XRT_VERSION"`
 }
 
-install_u280_shell() {
-    check_shellpkg
-    if [[ $? != 0 ]]; then
-        echo "Download Shell package"
-        wget -cO - "https://www.xilinx.com/bin/public/openDownload?filename=$SHELL_PACKAGE" > /tmp/$SHELL_PACKAGE
-        if [[ $SHELL_PACKAGE == *.tar.gz ]]; then
-            echo "Untar the package. "
-            tar xzvf /tmp/$SHELL_PACKAGE -C /tmp/
-            rm /tmp/$SHELL_PACKAGE
-        fi
-        echo "Install Shell"
-        echo "Install Ubuntu shell package"
-        apt-get install -y /tmp/xilinx*
-        rm /tmp/xilinx*
-    else
-        echo "The package is already installed. "
-    fi
+install_xbflash() {
+    sudo cp -r /proj/oct-fpga-p4-PG0/tools/xbflash /tmp
+    sudo apt install /tmp/xbflash/*.deb
 }
 
 verify_install() {
@@ -70,13 +40,6 @@ verify_install() {
         echo "XRT installation verified."
     else
         echo "XRT installation could not be verified."
-        errors=$((errors+1))
-    fi
-    check_shellpkg
-    if [ $? == 0 ] ; then
-        echo "Shell package installation verified."
-    else
-        echo "Shell package installation could not be verified."
         errors=$((errors+1))
     fi
     return $errors
@@ -93,25 +56,19 @@ VITISVERSION=$3
 SCRIPT_PATH=/local/repository
 COMB="${XRTVERSION}_${OSVERSION}"
 XRT_PACKAGE=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $1}' | awk -F= '{print $2}'`
-SHELL_PACKAGE=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $2}' | awk -F= '{print $2}'`
-PACKAGE_NAME=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $5}' | awk -F= '{print $2}'`
-PACKAGE_VERSION=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $6}' | awk -F= '{print $2}'`
 XRT_VERSION=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $7}' | awk -F= '{print $2}'`
 U280=1
 
 install_libs
 install_xrt
-install_shellpkg
-verify_install
+install_xbflash
     
 if [ $? == 0 ] ; then
-    echo "XRT and shell package installation successful."
+    echo "XRT installation successful."
 else
-    echo "XRT and/or shell package installation failed."
+    echo "XRT installation failed."
     exit 1
 fi
-
-install_dev_platform
 
 echo "$REMOTEDESKTOP"
 if [ $REMOTEDESKTOP == "True" ] ; then
