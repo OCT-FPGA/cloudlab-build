@@ -10,7 +10,7 @@ install_libs(){
     apt update
     apt install -y opencl-headers
     /proj/oct-fpga-p4-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
-    bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
+    bash -c "echo 'source /proj/oct-fpga-p4-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
 }
 
 install_xrt() {
