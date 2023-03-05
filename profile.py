@@ -37,7 +37,7 @@ pc.defineParameter("vitisVersion", "Vitis Version",
 pc.defineParameter("xrtVersion", "XRT Version",
                    portal.ParameterType.STRING,
                    xrtVersion[0], xrtVersion,
-                   longDescription="Select a tool version.")   
+                   longDescription="Select the tool version.")   
 
 pc.defineParameter("enableRemoteDesktop", "Remote Desktop Access",
                    portal.ParameterType.BOOLEAN, False,
