@@ -32,17 +32,17 @@ pc.defineParameter("numCPU",  "No: of VCPUs",
 pc.defineParameter("vitisVersion", "Vitis Version",
                    portal.ParameterType.STRING,
                    vitisVersion[0], vitisVersion,
-                   longDescription="Select the Vitis version")   
+                   longDescription="Select the Vitis version.")   
 
 pc.defineParameter("xrtVersion", "XRT Version",
                    portal.ParameterType.STRING,
                    xrtVersion[0], xrtVersion,
-                   longDescription="Select a tool version. It is recommended to use the latest version for the deployment workflow. For more information, visit https://www.xilinx.com/products/boards-and-kits/alveo/u280.html#gettingStarted")   
+                   longDescription="Select a tool version.")   
 
 pc.defineParameter("enableRemoteDesktop", "Remote Desktop Access",
                    portal.ParameterType.BOOLEAN, False,
                    advanced=False,
-                   longDescription="Enable remote desktop access by installing Gnome desktop and VNC server.")
+                   longDescription="Enable remote desktop access by installing GNOME desktop and VNC server.")
 
 params = pc.bindParameters() 
  
