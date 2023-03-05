@@ -65,6 +65,7 @@ U280=1
 install_libs
 install_xrt
 #install_xbflash
+verify_install
     
 if [ $? == 0 ] ; then
     echo "XRT installation successful."
