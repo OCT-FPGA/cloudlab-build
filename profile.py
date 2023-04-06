@@ -21,8 +21,7 @@ vitisVersion = [('2021.2'),
                 #('2022.1')
                ]
 
-xrtVersion = [('2021.1'), #('2022.1'), 
-              ('Do not install tools')] 
+xrtVersion = [('2021.1')] 
 
 pc.defineParameter("numRAM",  "RAM size (GB)",
                    portal.ParameterType.INTEGER, numRAM[0], numRAM,
@@ -67,10 +66,7 @@ node.disk_image = "urn:publicid:IDN+emulab.net+image+emulab-ops//UBUNTU18-64-STD
 # Set Storage
 #node.disk = 40
 
-if params.xrtVersion != "Do not install tools":
-  node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + str(params.enableRemoteDesktop) + " " + params.xrtVersion + " " + params.vitisVersion + " >> /local/repository/output_log.txt"))  
-pass 
-   
+node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + str(params.enableRemoteDesktop) + " " + params.xrtVersion + " " + params.vitisVersion + " >> /local/repository/output_log.txt"))  
 
 # Print the RSpec to the enclosing page.
 portal.context.printRequestRSpec()
