@@ -1,7 +1,8 @@
-add_to_path(){
-    bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
-    bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
-}
+#!/usr/bin/env bash
+#
+# (C) Copyright 2019, Xilinx, Inc.
+#
+#!/usr/bin/env bash
 
 install_libs(){
     #sudo apt install -y ocl-icd
@@ -10,6 +11,7 @@ install_libs(){
     apt install -y opencl-headers
     echo "Installing Vitis ${VITISVERSION} libraries"
     /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/scripts/installLibs.sh
+    bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
 }
 
 install_dev_platform(){
@@ -27,6 +29,7 @@ install_xrt() {
     apt update
     echo "Installing XRT package..."
     apt install -y /tmp/$XRT_PACKAGE
+    bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
 }
 
 install_shellpkg() {
@@ -102,7 +105,6 @@ install_libs
 install_xrt
 install_shellpkg
 verify_install
-add_to_path
     
 if [ $? == 0 ] ; then
     echo "XRT and shell package installation successful."
