@@ -1,7 +1,6 @@
 add_to_path(){
     bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
     bash -c "echo 'source /opt/xilinx/xrt/setup.sh' >> /etc/profile"
-    bash -c "echo 'export PATH="$PATH:/opt/build"' >> /etc/profile"
 }
 
 install_libs(){
