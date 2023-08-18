@@ -14,6 +14,7 @@ install_libs(){
     bash -c "echo 'source /proj/octfpga-PG0/tools/Xilinx/Vitis/${VITISVERSION}/settings64.sh' >> /etc/profile"
     bash -c "echo 'export FINN_XILINX_PATH=/proj/octfpga-PG0/tools/Xilinx' >> /etc/profile"
     bash -c "echo 'export FINN_XILINX_VERSION=${VITISVERSION}' >> /etc/profile"
+    bash -c "echo 'export PLATFORM_REPO_PATHS=/opt/xilinx/platforms' >> /etc/profile"
 }
 
 install_dev_platform(){
