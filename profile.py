@@ -69,7 +69,7 @@ node.ram = 1024*params.numRAM
 # Set Storage
 node.disk = 50
 
-params_str = ','.join([f'{key}={value}' for key, value in params.items()])
+params_str = ','.join(['{}={}'.format(key, value) for key, value in params.items()])
 
 node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + params_str + " >> /local/repository/output_log.txt"))  
 
