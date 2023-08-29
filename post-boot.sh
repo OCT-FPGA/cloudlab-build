@@ -17,6 +17,37 @@ install_libs(){
     bash -c "echo 'export PLATFORM_REPO_PATHS=/opt/xilinx/platforms' >> /etc/profile"
 }
 
+install_docker(){
+    echo "Install docker"
+    apt update 
+    apt install -y apt-transport-https ca-certificates curl software-properties-common 
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - 
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" 
+    apt-cache policy docker-ce 
+    apt install -y docker-ce 
+
+    sudo mkdir /docker && sudo /usr/local/etc/emulab/mkextrafs.pl /docker
+    new_data_path="/docker"
+
+    # Create the daemon.json file with the specified content
+    echo '{
+      "data-root": "'"$new_data_path"'"
+    }' | sudo tee /etc/docker/daemon.json > /dev/null
+
+    # Restart Docker
+    sudo systemctl restart docker
+    echo "Docker data directory updated to $new_data_path"
+}
+
+install_remote_desktop(){
+    echo "Installing remote desktop software"
+    apt install -y ubuntu-gnome-desktop
+    echo "Installed gnome desktop"
+    systemctl set-default multi-user.target
+    apt install -y tigervnc-standalone-server
+    echo "Installed vnc server"
+}
+
 install_dev_platform(){
     echo "Install dev platform"
     cp /proj/octfpga-PG0/tools/dev_platform/${XRTVERSION}/*.deb /tmp
@@ -119,9 +150,6 @@ OSVERSION=`echo $OSVERSION | tr -d '"'`
 VERSION_ID=`grep '^VERSION_ID=' /etc/os-release | awk -F= '{print $2}'`
 VERSION_ID=`echo $VERSION_ID | tr -d '"'`
 OSVERSION="$OSVERSION-$VERSION_ID"
-#REMOTEDESKTOP=$1
-#XRTVERSION=$2
-#VITISVERSION=$3
 SCRIPT_PATH=/local/repository
 COMB="${XRTVERSION}_${OSVERSION}"
 XRT_PACKAGE=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $1}' | awk -F= '{print $2}'`
@@ -142,17 +170,15 @@ else
     echo "XRT and/or shell package installation failed."
     exit 1
 fi
-
 install_dev_platform
 
 echo "$REMOTEDESKTOP"
 if [ $REMOTEDESKTOP == "True" ] ; then
-    echo "Installing remote desktop software"
-    apt install -y ubuntu-gnome-desktop
-    echo "Installed gnome desktop"
-    systemctl set-default multi-user.target
-    apt install -y tigervnc-standalone-server
-    echo "Installed vnc server"
+    install_remote_desktop
+fi
+
+if [ "$DOCKER" == "True" ]; then
+    install_docker
 fi
 
 echo "Done running startup script."
