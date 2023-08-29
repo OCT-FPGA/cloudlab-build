@@ -9,7 +9,6 @@ a public IP address for the VM itself.)
 
 import geni.portal as portal
 import geni.rspec.pg as pg
-import json
 
 # Create a Request object to start building the RSpec.
 pc = portal.Context()
@@ -70,11 +69,9 @@ node.ram = 1024*params.numRAM
 # Set Storage
 node.disk = 50
 
-serialized_params = json.dumps(params)
-service_command = "sudo /local/repository/post-boot.sh '%s' >> /local/repository/output_log.txt" % serialized_params
+params_str = ','.join([f'{key}={value}' for key, value in params.items()])
 
-node.addService(pg.Execute(shell="bash", command=service_command))
-#node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + params + " >> /local/repository/output_log.txt"))  
+node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + params_str + " >> /local/repository/output_log.txt"))  
 
 # Print the RSpec to the enclosing page.
 portal.context.printRequestRSpec()
