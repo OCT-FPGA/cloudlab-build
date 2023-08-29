@@ -70,8 +70,9 @@ node.ram = 1024*params.numRAM
 node.disk = 50
 
 serialized_params = json.dumps(params)
-node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + ${serializedParams} + " >> /local/repository/output_log.txt"))
+service_command = f"sudo /local/repository/post-boot.sh '{serialized_params}' >> /local/repository/output_log.txt"
 
+node.addService(pg.Execute(shell="bash", command=service_command))
 #node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + params + " >> /local/repository/output_log.txt"))  
 
 # Print the RSpec to the enclosing page.
