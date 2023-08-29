@@ -69,8 +69,8 @@ node.ram = 1024*params.numRAM
 # Set Storage
 node.disk = 50
 
-const serializedParams = JSON.stringify(params);
-node.addService(pg.Execute(shell="bash", command=`sudo /local/repository/post-boot.sh '${serializedParams}' >> /local/repository/output_log.txt`));
+serialized_params = json.dumps(params)
+node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + ${serializedParams} + " >> /local/repository/output_log.txt"))
 
 #node.addService(pg.Execute(shell="bash", command="sudo /local/repository/post-boot.sh " + params + " >> /local/repository/output_log.txt"))  
 
