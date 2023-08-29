@@ -86,6 +86,22 @@ verify_install() {
     fi
     return $errors
 }
+
+# Get the serialized parameters from the command-line argument
+serialized_params="$1"
+
+# Print a message
+echo "Received serialized parameters: $serialized_params"
+
+# Parse the JSON and print individual parameters
+# Assumes `jq` is available for JSON parsing
+param1=$(echo "$serialized_params" | jq -r '.numRAM')
+param2=$(echo "$serialized_params" | jq -r '.numCPU')
+
+# Print individual parameters
+echo "RAM: $param1"
+echo "CPU: $param2"
+
 SHELL=1
 OSVERSION=`grep '^ID=' /etc/os-release | awk -F= '{print $2}'`
 OSVERSION=`echo $OSVERSION | tr -d '"'`
