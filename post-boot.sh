@@ -87,13 +87,31 @@ verify_install() {
     return $errors
 }
 
-# Get the serialized parameters from the command-line argument
-serialized_params="$1"
+# Get the parameters string from the command-line argument
+params_str="$1"
 
+# Split the parameters string into an array using comma as delimiter
+IFS=',' read -ra params <<< "$params_str"
 
-# Print individual parameters
-echo "paramvalues: $serialized_params"
-
+# Loop through the array and extract key-value pairs
+for param in "${params[@]}"; do
+  IFS='=' read -ra key_value <<< "$param"
+  key="${key_value[0]}"
+  value="${key_value[1]}"
+  
+  if [ "$key" == "vitisVersion" ]; then
+    VITISVERSION="$value"
+  fi
+  if [ "$key" == "xrtVersion" ]; then
+    XRTVERSION="$value"
+  fi
+  if [ "$key" == "enableRemoteDesktop" ]; then
+    REMOTEDESKTOP="$value"
+  fi
+  if [ "$key" == "docker" ]; then
+    DOCKER="$value"
+  fi
+done
 
 SHELL=1
 OSVERSION=`grep '^ID=' /etc/os-release | awk -F= '{print $2}'`
@@ -101,9 +119,9 @@ OSVERSION=`echo $OSVERSION | tr -d '"'`
 VERSION_ID=`grep '^VERSION_ID=' /etc/os-release | awk -F= '{print $2}'`
 VERSION_ID=`echo $VERSION_ID | tr -d '"'`
 OSVERSION="$OSVERSION-$VERSION_ID"
-REMOTEDESKTOP=$1
-XRTVERSION=$2
-VITISVERSION=$3
+#REMOTEDESKTOP=$1
+#XRTVERSION=$2
+#VITISVERSION=$3
 SCRIPT_PATH=/local/repository
 COMB="${XRTVERSION}_${OSVERSION}"
 XRT_PACKAGE=`grep ^$COMB: $SCRIPT_PATH/spec.txt | awk -F':' '{print $2}' | awk -F';' '{print $1}' | awk -F= '{print $2}'`
