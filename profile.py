@@ -67,7 +67,7 @@ node.cores = params.numCPU
 node.ram = 1024*params.numRAM
 
 # Set Storage
-node.disk = 50
+node.disk = 80
 
 params_str = ','.join(['{}={}'.format(key, value) for key, value in params.items()])
 
