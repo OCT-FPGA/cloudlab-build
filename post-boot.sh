@@ -171,6 +171,7 @@ else
     exit 1
 fi
 install_dev_platform
+sudo mkdir /build && sudo /usr/local/etc/emulab/mkextrafs.pl /build
 
 echo "$REMOTEDESKTOP"
 if [ $REMOTEDESKTOP == "True" ] ; then
