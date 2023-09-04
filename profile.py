@@ -67,7 +67,11 @@ node.cores = params.numCPU
 node.ram = 1024*params.numRAM
 
 # Set Storage
-node.disk = 80
+# node.disk = 80
+
+bs = node.Blockstore("bs", "/build")
+bs.size = "40GB"
+bs.placement = "nonsysvol"
 
 params_str = ','.join(['{}={}'.format(key, value) for key, value in params.items()])
 
