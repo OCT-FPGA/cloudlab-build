@@ -71,7 +71,7 @@ node.ram = 1024*params.numRAM
 
 bs = node.Blockstore("bs", "/build")
 bs.size = "40GB"
-bs.placement = "nonsysvol"
+bs.placement = "any"
 
 params_str = ','.join(['{}={}'.format(key, value) for key, value in params.items()])
 
