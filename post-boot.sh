@@ -26,8 +26,8 @@ install_docker(){
     apt-cache policy docker-ce 
     apt install -y docker-ce 
 
-    sudo mkdir /docker && sudo /usr/local/etc/emulab/mkextrafs.pl /docker
-    new_data_path="/docker"
+    sudo mkdir /build/docker
+    new_data_path="/build/docker"
 
     # Create the daemon.json file with the specified content
     echo '{
@@ -171,7 +171,7 @@ else
     exit 1
 fi
 install_dev_platform
-#sudo mkdir /build && sudo /usr/local/etc/emulab/mkextrafs.pl /build && sudo chmod 777 /build
+sudo mkdir /build && sudo /usr/local/etc/emulab/mkextrafs.pl /build && sudo chmod 777 /build
 
 echo "$REMOTEDESKTOP"
 if [ $REMOTEDESKTOP == "True" ] ; then
